@@ -90,7 +90,7 @@ const Login = () => {
           className="w-full rounded bg-[#E50914] py-3 font-semibold"
           onClick={() => setLogin(true)}
           type="submit">
-          {loading ? <Loader color="dark:fill-[#fff]" /> : "Sign In"}
+          {loading ? <Loader color="dark:fill-gray-300" /> : "Sign In"}
         </button>
         <div className="text-[gray]">
           New to Netflix?{" "}
