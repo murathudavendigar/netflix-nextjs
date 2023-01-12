@@ -3,9 +3,10 @@ import { modalState, movieState } from "../atoms/modalAtom";
 import { baseUrlThumbnail } from "../constants/movie";
 import { Movie } from "../typings";
 import { useRecoilState } from "recoil";
+import { DocumentData } from "firebase/firestore";
 
 interface Props {
-  movie: Movie;
+  movie: Movie | DocumentData;
   //   movie: Movie | DocumentData;
 }
 

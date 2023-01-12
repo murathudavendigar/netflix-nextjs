@@ -2,6 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import Loader from "../components/Loader";
 import useAuth from "../hooks/useAuth";
 
 interface Inputs {
@@ -11,7 +12,7 @@ interface Inputs {
 
 const Login = () => {
   const [login, setLogin] = useState(true);
-  const { signIn, signUp } = useAuth();
+  const { signIn, signUp, loading } = useAuth();
 
   const {
     register,
@@ -89,7 +90,7 @@ const Login = () => {
           className="w-full rounded bg-[#E50914] py-3 font-semibold"
           onClick={() => setLogin(true)}
           type="submit">
-          Sign In
+          {loading ? <Loader color="dark:fill-[#fff]" /> : "Sign In"}
         </button>
         <div className="text-[gray]">
           New to Netflix?{" "}
