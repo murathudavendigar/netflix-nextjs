@@ -4,15 +4,15 @@ import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
 
 export default function BasicMenu() {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
+  const [anchorElement, setAnchorElement] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorElement);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+    setAnchorElement(event.currentTarget);
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorElement(null);
   };
 
   return (
@@ -28,7 +28,7 @@ export default function BasicMenu() {
       </Button>
       <Menu
         id="basic-menu"
-        anchorEl={anchorEl}
+        anchorEl={anchorElement}
         open={open}
         onClose={handleClose}
         className="menu"
