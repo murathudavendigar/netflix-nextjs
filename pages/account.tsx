@@ -5,7 +5,6 @@ import useAuth from "../hooks/useAuth";
 
 const Account = () => {
   const { user, logout } = useAuth();
-  console.log(user);
   return (
     <div>
       <Head>

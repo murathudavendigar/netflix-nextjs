@@ -4,6 +4,7 @@ import { baseUrlThumbnail } from "../constants/movie";
 import { Movie } from "../typings";
 import { useRecoilState } from "recoil";
 import { DocumentData } from "firebase/firestore";
+import { useState } from "react";
 
 interface Props {
   movie: Movie | DocumentData;
@@ -13,6 +14,7 @@ interface Props {
 const Thumbnail = ({ movie }: Props) => {
   const [currentMovie, setCurrentMovie] = useRecoilState(movieState);
   const [showModal, setShowModal] = useRecoilState(modalState);
+  const [showText, setShowText] = useState(false);
 
   return (
     <div
@@ -20,10 +22,21 @@ const Thumbnail = ({ movie }: Props) => {
       onClick={() => {
         setCurrentMovie(movie);
         setShowModal(true);
-      }}>
+      }}
+      onMouseOver={() => setShowText(true)}
+      onMouseOut={() => setShowText(false)}>
+      <h1
+        className={`bottom-16 left-4 text-md font-bold text-[#e5e5e5] ${
+          showText && "absolute z-20 "
+        }`}>
+        {movie.title}
+      </h1>
+
       <Image
         src={`${baseUrlThumbnail}${movie.backdrop_path || movie.poster_path}`}
-        className="rounded-md object-cover md:rounded"
+        className={`rounded-md object-cover md:rounded  ${
+          showText && "opacity-40"
+        }`}
         fill
         alt={movie.title}
       />

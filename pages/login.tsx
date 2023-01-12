@@ -12,7 +12,8 @@ interface Inputs {
 
 const Login = () => {
   const [login, setLogin] = useState(true);
-  const { signIn, signUp, loading } = useAuth();
+  const [loaderLoading, setLoaderLoading] = useState(false);
+  const { signIn, signUp } = useAuth();
 
   const {
     register,
@@ -22,12 +23,13 @@ const Login = () => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
+    setLoaderLoading(true);
     if (login) {
       await signIn(data.email, data.password);
     } else {
       await signUp(data.email, data.password);
     }
+    setLoaderLoading(false);
   };
 
   return (
@@ -90,7 +92,7 @@ const Login = () => {
           className="w-full rounded bg-[#E50914] py-3 font-semibold"
           onClick={() => setLogin(true)}
           type="submit">
-          {loading ? <Loader color="dark:fill-gray-300" /> : "Sign In"}
+          {loaderLoading ? <Loader color="dark:fill-gray-300" /> : "Sign In"}
         </button>
         <div className="text-[gray]">
           New to Netflix?{" "}

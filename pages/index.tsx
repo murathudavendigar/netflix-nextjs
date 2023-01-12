@@ -9,6 +9,7 @@ import requests from "../utils/requests";
 import { useRecoilValue } from "recoil";
 import Modal from "../components/Modal";
 import useList from "../hooks/useList";
+import Footer from "../components/Footer";
 
 interface Props {
   netflixOriginals: Movie[];
@@ -16,9 +17,13 @@ interface Props {
   topRated: Movie[];
   actionMovies: Movie[];
   comedyMovies: Movie[];
+  warMovies: Movie[];
+  sfMovies: Movie[];
   horrorMovies: Movie[];
-  romanceMovies: Movie[];
+  animationMovies: Movie[];
   documentaries: Movie[];
+  upcomingMovies: Movie[];
+  nowPlaying: Movie[];
 }
 
 const Home = ({
@@ -27,9 +32,13 @@ const Home = ({
   comedyMovies,
   documentaries,
   horrorMovies,
-  romanceMovies,
+  warMovies,
+  sfMovies,
+  animationMovies,
   topRated,
   trendingNow,
+  upcomingMovies,
+  nowPlaying,
 }: Props) => {
   const { user, loading } = useAuth();
   const showModal = useRecoilValue(modalState);
@@ -55,18 +64,23 @@ const Home = ({
         <Banner netflixOriginals={netflixOriginals} />
         <section className="md:space-y-24">
           <Row title="Trending Now" movies={trendingNow} />
+          <Row title="Now Playing" movies={nowPlaying} />
           <Row title="Top Rated" movies={topRated} />
           <Row title="Action Thrillers" movies={actionMovies} />
+          <Row title="Upcoming" movies={upcomingMovies} />
+          <Row title="War" movies={warMovies} />
           {/* My List */}
           {list.length > 0 && <Row title="My List" movies={list} />}
 
           <Row title="Comedies" movies={comedyMovies} />
-          <Row title="Scary Movies" movies={horrorMovies} />
-          <Row title="Romance Movies" movies={romanceMovies} />
+          <Row title="Science-Fiction" movies={sfMovies} />
+          <Row title="Scary" movies={horrorMovies} />
+          <Row title="Animation" movies={animationMovies} />
           <Row title="Documentaries" movies={documentaries} />
         </section>
       </main>
       {showModal && <Modal />}
+      <Footer />
     </div>
   );
 };
@@ -79,19 +93,27 @@ export const getServerSideProps = async () => {
     trendingNow,
     topRated,
     actionMovies,
+    warMovies,
+    sfMovies,
     comedyMovies,
     horrorMovies,
-    romanceMovies,
+    animationMovies,
     documentaries,
+    upcomingMovies,
+    nowPlaying,
   ] = await Promise.all([
     fetch(requests.fetchNetflixOriginals).then((res) => res.json()),
     fetch(requests.fetchTrending).then((res) => res.json()),
     fetch(requests.fetchTopRated).then((res) => res.json()),
     fetch(requests.fetchActionMovies).then((res) => res.json()),
+    fetch(requests.fetchWarMovies).then((res) => res.json()),
+    fetch(requests.fetchSFMovies).then((res) => res.json()),
     fetch(requests.fetchComedyMovies).then((res) => res.json()),
     fetch(requests.fetchHorrorMovies).then((res) => res.json()),
-    fetch(requests.fetchRomanceMovies).then((res) => res.json()),
+    fetch(requests.fetchAnimationMovies).then((res) => res.json()),
     fetch(requests.fetchDocumentaries).then((res) => res.json()),
+    fetch(requests.fetchUpcoming).then((res) => res.json()),
+    fetch(requests.fetchNowPlaying).then((res) => res.json()),
   ]);
 
   return {
@@ -101,9 +123,13 @@ export const getServerSideProps = async () => {
       topRated: topRated.results,
       actionMovies: actionMovies.results,
       comedyMovies: comedyMovies.results,
+      warMovies: warMovies.results,
+      sfMovies: sfMovies.results,
       horrorMovies: horrorMovies.results,
-      romanceMovies: romanceMovies.results,
+      animationMovies: animationMovies.results,
       documentaries: documentaries.results,
+      upcomingMovies: upcomingMovies.results,
+      nowPlaying: nowPlaying.results,
     },
   };
 };
